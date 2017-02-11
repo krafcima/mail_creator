@@ -25,8 +25,9 @@ class MACADRRESSA {
 	string adresa;
 public:
 	void vlozMacAdressu(string adresa);
-	bool MACADRRESSA::kontrolaMac(string adrr);
+	bool kontrolaMac(string adrr);
 	const string &getAdress() const { return adresa; };
+	string spravnyTvar(string vstup);
 };
 
 class INFORMACIE {
@@ -89,33 +90,46 @@ bool NAZOVPC::kontrola(string name) {
 }
 
 void NAZOVPC::vlozNazovPocitaca(string name) {
-	/*if (name.size() == 0) {
-	return "-1";
-	}*/
 	if (kontrola(name) == true) {
 		this->name = name;
 	}
 	else {
-		/*return "Zle zadany vstup.";*/
 		cout << "Zle zadany vstup." << endl;
 		getchar();
-
 	}
 }
 
 // CLASS MACADRRESSA METODY A FUNKCIE
 
+string MACADRRESSA::spravnyTvar(string vstup) {
+	string res;
+	for (unsigned int i = 0; i < vstup.size(); i++) {
+		char buff = vstup[i];
+		if (buff > 47 && buff < 58) {
+			res += buff;
+		}
+		if (buff > 64 && buff < 71) {
+			buff = buff + 32;
+			res += buff;
+		}
+	}
+	return res; 
+}
+
 bool MACADRRESSA::kontrolaMac(string adrr) {
 	if (adrr.size() == 0) {
 		return false;
 	}
-	if (adrr.size() > 0) {
+	if (0 < adrr.size() < 13) {
 		return true;
+	}
+	else {
+
 	}
 }
 void MACADRRESSA::vlozMacAdressu(string adresa) {
 	if (kontrolaMac(adresa) == true) {
-		this->adresa = adresa;
+		this->adresa = spravnyTvar(adresa);
 	}
 	else {
 		cout << "zle zadana mac adresa!!!" << endl;
