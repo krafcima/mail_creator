@@ -191,13 +191,13 @@ void VYPIS::vypisDoSuboru(string nazovSuboru) {
 }
 
 //PONUKA
-void PONUKA::testik() {
-	system("cls");
+/*void PONUKA::testik() {
+	system("cls");*/
 	/*cout << "This is the entry: " << vstup << " This is his size: " << vstup.size() << endl;*/
 	/*cout << "Press ENTER to CONTINUE" << endl;
 	getchar();*/
-	system("cls");
-}
+	/*system("cls");
+}*/
 
 
 void PONUKA::vlozVstup() {
@@ -273,7 +273,7 @@ void PONUKA::vyberVolby() {
 	}
 }
 
-void main(){
+/*void main(){
 	PONUKA m;
 	m.vyberVolby();
-}
+}*/

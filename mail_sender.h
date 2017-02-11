@@ -25,8 +25,9 @@ class MACADRRESSA {
 	string adresa;
 public:
 	void vlozMacAdressu(string adresa);
-	bool MACADRRESSA::kontrolaMac(string adrr);
+	bool kontrolaMac(string adrr);
 	const string &getAdress() const { return adresa; };
+	string spravnyTvar(string vstup);
 };
 
 class INFORMACIE {
@@ -89,33 +90,46 @@ bool NAZOVPC::kontrola(string name) {
 }
 
 void NAZOVPC::vlozNazovPocitaca(string name) {
-	/*if (name.size() == 0) {
-	return "-1";
-	}*/
 	if (kontrola(name) == true) {
 		this->name = name;
 	}
 	else {
-		/*return "Zle zadany vstup.";*/
 		cout << "Zle zadany vstup." << endl;
 		getchar();
-
 	}
 }
 
 // CLASS MACADRRESSA METODY A FUNKCIE
 
+string MACADRRESSA::spravnyTvar(string vstup) {
+	string res;
+	for (unsigned int i = 0; i < vstup.size(); i++) {
+		char buff = vstup[i];
+		if (buff > 47 && buff < 58) {
+			res += buff;
+		}
+		if (buff > 64 && buff < 71) {
+			buff = buff + 32;
+			res += buff;
+		}
+	}
+	return res;
+}
+
 bool MACADRRESSA::kontrolaMac(string adrr) {
 	if (adrr.size() == 0) {
 		return false;
 	}
-	if (adrr.size() > 0) {
+	if (0 < adrr.size() < 13) {
 		return true;
+	}
+	else {
+
 	}
 }
 void MACADRRESSA::vlozMacAdressu(string adresa) {
 	if (kontrolaMac(adresa) == true) {
-		this->adresa = adresa;
+		this->adresa = spravnyTvar(adresa);
 	}
 	else {
 		cout << "zle zadana mac adresa!!!" << endl;
@@ -132,26 +146,41 @@ void INFORMACIE::vlozInformacie(string info) {
 void VYPIS::vypisDoSuboru(string nazovSuboru) {
 	ofstream vystup;
 	vystup.open(nazovSuboru);
-	vystup << "++=============================================================++" << endl;
-	vystup << (char)124 << (char)124 << "RUNNING OS INSTALL:                                          " << (char)124 << (char)124 << endl;
-	vystup << (char)124 << (char)124 << "=================++===================++=====================" << (char)124 << (char)124 << endl;
-	vystup << (char)124 << (char)124 << "      PC NAME    " << (char)124 << (char)124 << "     MAC ADRESSA   " << (char)124 << (char)124 << "      STATUS INFO    " << (char)124 << (char)124 << endl;
-	vystup << (char)124 << (char)124 << "-----------------" << (char)124 << (char)124 << "-------------------" << (char)124 << (char)124 << "---------------------" << (char)124 << (char)124 << endl;
+	vystup << "++===============================================================++" << endl;
+	vystup << (char)124 << (char)124 << "RUNNING OS INSTALL:                                            " << (char)124 << (char)124 << endl;
+	vystup << (char)124 << (char)124 << "==================++====================++=====================" << (char)124 << (char)124 << endl;
+	vystup << (char)124 << (char)124 << "      PC NAME     " << (char)124 << (char)124 << "     MAC ADRESSA    " << (char)124 << (char)124 << "      STATUS INFO    " << (char)124 << (char)124 << endl;
+	vystup << (char)124 << (char)124 << "------------------" << (char)124 << (char)124 << "--------------------" << (char)124 << (char)124 << "---------------------" << (char)124 << (char)124 << endl;
 	for (unsigned int i = 0; i < d.size(); i++) {
-		vystup << (char)124 << (char)124 << "    " << d.at(i).getNamePC() << "  " << (char)124 << (char)124 << "    " << d.at(i).getMacAdress() << "    " << (char)124 << (char)124 << "   " << d.at(i).getInformacia() << "   " << (char)124 << (char)124 << endl;
-		vystup << (char)124 << (char)124 << "-----------------" << (char)124 << (char)124 << "-------------------" << (char)124 << (char)124 << "---------------------" << (char)124 << (char)124 << endl;
+		if (d.at(i).getInformacia().size() == 15) {
+			vystup << (char)124 << (char)124 << "    " << d.at(i).getNamePC() << "    " << (char)124 << (char)124 << "    " << d.at(i).getMacAdress() << "    " << (char)124 << (char)124 << "   " << d.at(i).getInformacia() << "   " << (char)124 << (char)124 << endl;
+		}
+		else {
+			vystup << (char)124 << (char)124 << "    " << d.at(i).getNamePC() << "    " << (char)124 << (char)124 << "    " << d.at(i).getMacAdress() << "    " << (char)124 << (char)124 << "   " << d.at(i).getInformacia() << "            " << (char)124 << (char)124 << endl;
+		}
+		vystup << (char)124 << (char)124 << "------------------" << (char)124 << (char)124 << "--------------------" << (char)124 << (char)124 << "---------------------" << (char)124 << (char)124 << endl;
 	}
 	vystup << "++==================++====================++=====================++" << endl;
+	system("cls");
 	PONUKA v;
 	v.vyberVolby();
 }
 
 void VYPIS::vypisNaKonzolu() {
-	cout << "++=============================================================++" << endl;
-	cout << (char)124 << (char)124 << "RUNNING OS INSTALL:                                          " << (char)124 << (char)124 << endl;
-	cout << (char)124 << (char)124 << "==================+====================+=====================" << (char)124 << (char)124 << endl;
+	cout << "++===============================================================++" << endl;
+	cout << (char)124 << (char)124 << "RUNNING OS INSTALL:                                            " << (char)124 << (char)124 << endl;
+	cout << (char)124 << (char)124 << "==================++====================++=====================" << (char)124 << (char)124 << endl;
+	cout << (char)124 << (char)124 << "      PC NAME     " << (char)124 << (char)124 << "     MAC ADRESSA    " << (char)124 << (char)124 << "      STATUS INFO    " << (char)124 << (char)124 << endl;
+	cout << (char)124 << (char)124 << "------------------" << (char)124 << (char)124 << "--------------------" << (char)124 << (char)124 << "---------------------" << (char)124 << (char)124 << endl;
 	for (unsigned int i = 0; i < d.size(); i++) {
-		cout << (char)124 << (char)124 << "    " << d.at(i).getNamePC() << "  " << (char)124 << (char)124 << "    " << d.at(i).getMacAdress() << "    " << (char)124 << (char)124 << "   " << d.at(i).getInformacia() << "   " << (char)124 << (char)124 << endl;
+		if (d.at(i).getInformacia().size() == 15) {
+			cout << (char)124 << (char)124 << "    " << d.at(i).getNamePC() << "    " << (char)124 << (char)124 << "    " << d.at(i).getMacAdress() << "    " << (char)124 << (char)124 << "   " << d.at(i).getInformacia() << "   " << (char)124 << (char)124 << endl;
+		}
+		else {
+			cout << (char)124 << (char)124 << "    " << d.at(i).getNamePC() << "    " << (char)124 << (char)124 << "    " << d.at(i).getMacAdress() << "    " << (char)124 << (char)124 << "   " << d.at(i).getInformacia() << "            " << (char)124 << (char)124 << endl;
+		}
+
+		cout << (char)124 << (char)124 << "------------------" << (char)124 << (char)124 << "--------------------" << (char)124 << (char)124 << "---------------------" << (char)124 << (char)124 << endl;
 	}
 	cout << "++==================++====================++=====================++" << endl;
 	cout << "PRESS SOMETHING" << endl;
@@ -162,13 +191,13 @@ void VYPIS::vypisNaKonzolu() {
 }
 
 //PONUKA
-void PONUKA::testik() {
-	system("cls");
-	/*cout << "This is the entry: " << vstup << " This is his size: " << vstup.size() << endl;*/
-	cout << "Press ENTER to CONTINUE" << endl;
-	getchar();
-	system("cls");
-}
+/*void PONUKA::testik() {
+system("cls");*/
+/*cout << "This is the entry: " << vstup << " This is his size: " << vstup.size() << endl;*/
+/*cout << "Press ENTER to CONTINUE" << endl;
+getchar();*/
+/*system("cls");
+}*/
 
 
 void PONUKA::vlozVstup() {
@@ -213,11 +242,17 @@ void PONUKA::ulozDoSuboru(string nazovSuboru) {
 
 void PONUKA::vyberVolby() {
 	string vstup;
-	cout << "********************** PONUKA *****************" << endl;
-	cout << "1.) PRIDAJ PC" << endl;
-	cout << "2.) Vypis ulozene data" << endl;
-	cout << "3.) SAVE" << endl;
-	cout << "Zadaj volbu: " << endl;
+	cout << "+********************* PONUKA *****************+" << endl;
+	cout << "|==============================================|" << endl;
+	cout << "|----------------------------------------------|" << endl;
+	cout << "|               PRIDAJ PC >>>  1  <<<          |" << endl;
+	cout << "|----------------------------------------------|" << endl;
+	cout << "|         PRINT ON SCREEN >>>  2  <<<          |" << endl;
+	cout << "|----------------------------------------------|" << endl;
+	cout << "|        SAVE INTO A FILE >>>  3  <<<          |" << endl;
+	cout << "|----------------------------------------------|" << endl;
+	cout << "+==============================================+" << endl;
+	cout << "Zadaj volbu:" << endl;
 	getline(cin, vstup);
 	testik();
 	if (vstup.size() == 1) {
@@ -231,6 +266,7 @@ void PONUKA::vyberVolby() {
 			system("cls");
 			cout << "Enter file name: " << endl;
 			getline(cin, vstup);
+			vstup += ".txt";
 			ulozDoSuboru(vstup);
 			testik();
 		}
